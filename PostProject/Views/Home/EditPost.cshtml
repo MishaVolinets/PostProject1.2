@@ -1,0 +1,48 @@
+﻿@model PostProject.Models.PostModel
+@{
+    ViewBag.Title = "EditPost";
+}
+
+<h2>EditPost</h2>
+    <input type="text" value="@Model.Title" id="Title" />
+    <input type="hidden" value="@Model.Id" id="Id" />
+    <textarea cols="20" rows="10" id="Description">@Model.Description</textarea>
+    <button id="submit"> Зберегти</button>
+@*<div id="PU-block">
+    <div id="PU-block-Tit">
+        <div id="PU-Tit">
+            Title:
+        </div>
+        <div id="PU-in-Tit">
+            <textarea cols="15" rows="2.5"></textarea>
+        </div>
+    </div>
+    <div id="PU-block-Des">
+        <div id="PU-Des">
+            Description
+        </div>
+        <div id="PU-in-Des">
+            <textarea cols="30" rows="10"></textarea>
+        </div>
+    </div>
+    <div id="PU-block-Sub">
+        <button id="buttonSave">Зберегти</button>
+    </div>
+</div>*@
+
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $("#submit").click(function () {
+            var Title = $("#Title").val();
+            var Description = $("#Description").val();
+            var Id = $("#Id").val();
+            var success = function(data){
+                $(location).attr("href","/Home/Post");
+            }
+            $.post("/Home/SavePost", {Title,Description,Id},success,null);
+        });
+    });
+
+</script>

@@ -1,0 +1,229 @@
+
+.massageBlock{
+	width: 25%;
+	background-color: #61B2FA;
+	height: 225px;
+	padding: 10px;
+	border-radius: 5px;
+}
+.insideMassageBlock{
+	margin: auto;
+	width:100%;
+	height: 100%;
+}
+.inputBlock{
+	width: 100%;
+	display: inline-block;
+}
+.Text{
+	font-size: 16px;
+	float: left;
+}
+.Input{
+	float: right;
+}
+.bl-Main{
+    margin:20px auto;
+	padding: 5px;
+	width: 45%;
+	min-height: 450px;
+	background-color: #E4E4E4;
+	border: 2px solid #C7CACA;
+}
+
+.bl-info{
+	width: 100%;
+	height: auto;
+}
+.bl-tit{
+	width: 100%;
+	height: 100%; 
+	display: inline-block;
+}
+.name{
+	font-weight: 600;
+	font-size: 20px;
+	float: left;
+	margin-top: 24px;
+}
+.date{
+	float: left;
+	color: #737373;
+	font-size: 15px;
+	font-weight: 700;
+}
+.bl-title{
+	text-indent: 1.3em;
+	width: 80%;
+	min-height: 100px;
+	margin: 10px auto;
+    padding-left: 4px;
+	font-size: 30px;
+	font-weight: 900;
+	background-color: #5E5D5B;
+	color: #E4E4E4;
+	border-radius: 0px 10px 10px 0px;
+    border-left: 4px solid #009EFF;	
+}
+.bl-description{
+	width: 80%;
+	min-height: 200px;
+	margin: 10px auto;
+    padding-left: 4px;
+	background-color: #5E5D5B;
+	color: #E4E4E4;
+	border-radius: 0px 10px 10px 0px;
+    border-left: 4px solid #F22E32;	
+    font-size: 20px
+}
+.bl-description p{
+	text-indent: 1.2em;
+}
+.buttonDel {
+  float: right;
+  font-weight: 700;
+  color: white;
+  text-decoration: none;
+  padding: .8em 1em calc(.8em + 3px);
+  border-radius: 3px;
+  background: rgb(64,199,129);
+  box-shadow: 0 -3px rgb(53,167,110) inset;
+  transition: 0.2s;
+} 
+.buttonDel:hover { background: rgb(53, 167, 110); }
+.buttonDel:active {
+  background: rgb(33,147,90);
+  box-shadow: 0 3px rgb(33,147,90) inset;
+}
+.buttonEdit {
+  float: right;
+  font-weight: 700;
+  color: white;
+  text-decoration: none;
+  padding: .8em 1em calc(.8em + 3px);
+  border-radius: 3px;
+  background: rgb(64,199,129);
+  box-shadow: 0 -3px rgb(53,167,110) inset;
+  transition: 0.2s;
+} 
+.buttonEdit:hover { background: rgb(53, 167, 110); }
+.buttonEdit:active {
+  background: rgb(33,147,90);
+  box-shadow: 0 3px rgb(33,147,90) inset;
+}
+
+#PU-block{
+	margin: 10px;
+	width: 300px;
+	position: fixed;
+	border: 1px solid black;
+    left:40%;
+    top: 25%;
+    background-color: white;
+    display: none; 
+}
+#PU-block-Tit{
+	width: 90%;
+	height: 10%;
+	padding: 3%;
+	margin: 1.5%;
+}
+#PU-block-Des{
+	width: 90%;
+	height: 55%;
+	padding: 3%;
+	margin: 1.5%;
+}
+#PU-block-Sub{
+	width: 90%;
+	height: 10%;
+	padding: 3%;
+	margin: 20px 1.5% 1.5% 1.5%;
+	text-align: center;
+}
+#PU-Tit{
+	float: left;
+	width: 40%;
+	height: 100%;
+	text-align: center;
+	font-size: 25px;
+	font-weight: 700;
+}
+#PU-in-Tit{
+	width: 55%;
+	height: 100%;
+	float: right;
+	text-align: center;
+}
+#PU-Des{
+	width: 100%;
+	height: 20%;
+	text-align: center;
+	font-size: 30px;
+}
+#PU-in-Des{
+	width: 100%;
+	height: 75%;
+	margin-top: 10px;
+	text-align: center;
+}
+#buttonSave {
+  font-weight: 700;
+  color: white;
+  text-decoration: none;
+  padding: .8em 1em calc(.8em + 3px);
+  border-radius: 3px;
+  background: rgb(64,199,129);
+  box-shadow: 0 -3px rgb(53,167,110) inset;
+  transition: 0.2s;
+} 
+#buttonSave:hover { background: rgb(53, 167, 110); }
+#buttonSave:active {
+  background: rgb(33,147,90);
+  box-shadow: 0 3px rgb(33,147,90) inset;
+}
+.button {
+  font-weight: 700;
+  color: white;
+  text-decoration: none;
+  padding: .8em 1em calc(.8em + 3px);
+  border-radius: 3px;
+  background: rgb(64,199,129);
+  box-shadow: 0 -3px rgb(53,167,110) inset;
+  transition: 0.2s;
+} 
+.button:hover { background: rgb(53, 167, 110); }
+.button:active {
+  background: rgb(33,147,90);
+  box-shadow: 0 3px rgb(33,147,90) inset;
+}
+.bl-log{
+	width: 300px;
+	height: 200px;
+	position: fixed;
+	top: 25%;
+	left: 40%;
+	border: 1px solid black;
+    background-color: #ccc;
+}
+.bl-inpt{
+	width: 80%;
+	height: 20%;
+	margin: auto;
+	margin-top: 6%;
+}
+.bl-textLog{
+	height: 100%;
+	width: 50%;
+	float: left;
+}
+.bl-inptLog{
+	width: 40%;
+	height: 100%;
+	float: right;
+}
+.bl-text{
+	font-size: 20px;
+	font-weight: bold;
+	margin: 10px;
+}

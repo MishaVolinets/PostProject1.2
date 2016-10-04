@@ -1,0 +1,113 @@
+﻿@model IEnumerable<PostProject.Models.PostModel>
+<div id="PU-block">
+    <div id="PU-block-Tit">
+        <input type="hidden" value="" id="ModelID" />
+        <div id="PU-Tit">
+            Title:
+        </div>
+        <div id="PU-in-Tit">
+            <textarea cols="15" rows="2.5" id="textTit"></textarea>
+        </div>
+    </div>
+    <div id="PU-block-Des">
+        <div id="PU-Des">
+            Description
+        </div>
+        <div id="PU-in-Des">
+            <textarea cols="30" rows="10" id="textDes"></textarea>
+        </div>
+    </div>
+    <div id="PU-block-Sub">
+        <button id="buttonSave">Зберегти</button>
+    </div>
+</div>
+
+@foreach (var inst in Model)
+{
+<div class="bl-Main" id="@inst.Id">
+    <div class="bl-info">
+        <div class="bl-tit">
+            <div class="name">@ViewBag.Name</div>
+                
+                <button class="buttonDel" value="@inst.Id" >Видалити</button>
+        </div>
+        <div class="bl-tit">
+            <div class="date">@inst.DateOfCreate</div>
+            <button class="buttonEdit" value="@inst.Id">Редагувати</button>
+        </div>
+    </div>
+    <div class="bl-title" id="titId_@inst.Id">
+        @inst.Title
+    </div>
+    <div class="bl-description" id="descId_@inst.Id">
+        <p>@inst.Description</p>
+    </div>
+</div>
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $(".buttonDel").click(function () {
+            var ID = $(this).val();
+            $.ajax({
+                url: '@Url.Action("DeletePost","Home")',
+                type: "POST",
+                dataType: "html",
+                data: { id: ID },
+                success: function (data) {
+                    $("#" + ID).remove();
+                }
+            });
+        });
+        $(".buttonEdit").click(function () {
+            var ID = $(this).val();
+            var Title = $("#titId_" + ID).text().trim();
+            var Description = $("#descId_" + ID).text().trim();
+            $("#buttonSave").val(ID);
+            $("#textTit").val(Title);
+            $("#textDes").val(Description);
+            $("#PU-block").css("display", "block");
+
+            $('#textTit').focus(function (e) {
+                var TextField = $("#titId_" + ID);
+                var text;
+                $("#textTit").keyup(function (e) {
+                    text = $("#textTit").val();
+                    TextField.html("<p>" + text + "</p>");
+                })
+            });
+
+            $('#textDes').focus(function (e) {
+                var DescField = $("#descId_" + ID);
+                var text;
+                $("#textDes").keyup(function (e) {
+                    text = $("#textDes").val();
+                    DescField.html("<p>" + text + "</p>");
+                })
+            });
+
+
+        });
+
+
+        $("#buttonSave").click(function () {
+            var Id = $("#buttonSave").val();
+            var Title = $("#textTit").val();
+            var Description = $("#textDes").val();
+            $.ajax({
+                url: '@Url.Action("SavePost","Home")',
+                type: "POST",
+                data: { Id, Title, Description },
+                success: function (data) {
+                    $("#titId_" + Id).text(Title);
+                    $("#descId_" + Id).html("<p>"+Description+"</p>");
+                    $("#PU-block").css("display", "none");
+                }
+            });
+
+        });
+
+    });
+
+
+</script>
