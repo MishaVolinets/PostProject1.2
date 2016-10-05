@@ -27,8 +27,9 @@
 <div class="bl-Main" id="@inst.Id">
     <div class="bl-info">
         <div class="bl-tit">
-            <div class="name">@ViewBag.Name</div>
-                
+            @if(inst.User != null){
+            <div class="name" >@inst.User.FirstName @inst.User.LastName</div>
+            }
                 <button class="buttonDel" value="@inst.Id" >Видалити</button>
         </div>
         <div class="bl-tit">

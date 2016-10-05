@@ -79,6 +79,15 @@ namespace PostProject.Models
         [Display(Name = "Подтверждение пароля")]
         [Compare("Password", ErrorMessage = "Пароль и его подтверждение не совпадают.")]
         public string ConfirmPassword { get; set; }
+
+        [Required]
+        [Display(Name = "Ваше ім'я")]
+        public string FirstName { get; set; }
+
+        [Required]
+        [Display(Name = "Ваше Прізвище")]
+        public string LastName { get; set; }
+
     }
 
     public class ResetPasswordViewModel

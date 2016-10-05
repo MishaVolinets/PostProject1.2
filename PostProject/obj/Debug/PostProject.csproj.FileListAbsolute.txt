@@ -103,3 +103,6 @@ E:\Programming\C#\Projects\PostProject\PostProject\obj\Debug\PostProject.Migrati
 E:\Programming\C#\Projects\PostProject\PostProject\obj\Debug\PostProject.Migrations.UserPost.resources
 E:\Programming\C#\Projects\PostProject\PostProject\obj\Debug\PostProject.csprojResolveAssemblyReference.cache
 E:\Programming\C#\Projects\PostProject\PostProject\obj\Debug\PostProject.Migrations.UserId.resources
+E:\Programming\C#\Projects\PostProject\PostProject\obj\Debug\PostProject.Migrations.UserModel.resources
+E:\Programming\C#\Projects\PostProject\PostProject\obj\Debug\PostProject.Migrations.UserMode2.resources
+E:\Programming\C#\Projects\PostProject\PostProject\obj\Debug\PostProject.Migrations.UserMode3.resources

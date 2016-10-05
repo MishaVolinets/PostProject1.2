@@ -223,6 +223,18 @@
     <Compile Include="Migrations\201610041433185_UserId.Designer.cs">
       <DependentUpon>201610041433185_UserId.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201610050840058_UserModel.cs" />
+    <Compile Include="Migrations\201610050840058_UserModel.Designer.cs">
+      <DependentUpon>201610050840058_UserModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201610050850119_UserMode2.cs" />
+    <Compile Include="Migrations\201610050850119_UserMode2.Designer.cs">
+      <DependentUpon>201610050850119_UserMode2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201610050853093_UserMode3.cs" />
+    <Compile Include="Migrations\201610050853093_UserMode3.Designer.cs">
+      <DependentUpon>201610050853093_UserMode3.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -303,6 +315,7 @@
     <Content Include="Views\Home\Post.cshtml" />
     <Content Include="Views\Home\EditPost.cshtml" />
     <Content Include="Views\Shared\PostPartial.cshtml" />
+    <Content Include="Views\Shared\_UserInfoPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201609281040511_init.resx">
@@ -319,6 +332,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201610041433185_UserId.resx">
       <DependentUpon>201610041433185_UserId.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201610050840058_UserModel.resx">
+      <DependentUpon>201610050840058_UserModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201610050850119_UserMode2.resx">
+      <DependentUpon>201610050850119_UserMode2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201610050853093_UserMode3.resx">
+      <DependentUpon>201610050853093_UserMode3.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

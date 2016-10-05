@@ -1,9 +1,11 @@
-﻿using PostProject.Models;
+﻿using Microsoft.AspNet.Identity;
+using PostProject.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Data.Entity;
 
 namespace PostProject.Controllers
 {
@@ -37,14 +39,14 @@ namespace PostProject.Controllers
         [HttpPost]
         public ActionResult SentPost(PostModel model)
         {
-            if (model == null)
-                return View("Post");
+
+            string id = User.Identity.GetUserId();
+            model.User = db.Users.Find(id);
             model.Id = Guid.NewGuid().ToString();
             model.DateOfCreate = DateTime.Now;
             db.PostModel.Add(model);
             db.SaveChanges();
-            //Доробити форму виведення постів
-            return ShowUserPosts(model.UserId);
+            return ShowUserPosts();
         }
         [HttpPost]
         public void DeletePost(string id)
@@ -72,14 +74,23 @@ namespace PostProject.Controllers
             db.SaveChanges();
         }
         [HttpPost]
-        public ActionResult ShowUserPosts(int UserId)
+        public ActionResult ShowUserPosts()
         {
-            var list = from PostModel in db.PostModel
-                       where PostModel.UserId == UserId
-                       select PostModel;
-            list = list.OrderByDescending(x=>x.DateOfCreate);
-            ViewBag.Name = db.Users.Find(UserId).Name;
-            return PartialView("PostPartial",list.ToList());
+            string userId =  User.Identity.GetUserId();
+            if (HttpContext.User.Identity.IsAuthenticated)
+            {
+                var list = from PostModel in db.PostModel
+                           where PostModel.User.Id == userId
+                           select PostModel;
+                list = list.Include(x => x.User).OrderByDescending(x => x.DateOfCreate);
+                return PartialView("PostPartial", list.ToList());
+            }
+            else
+            {
+
+                var list = db.PostModel.Include(x=>x.User).ToList().OrderByDescending(x => x.DateOfCreate);
+                return PartialView("PostPartial", list.ToList());
+            }
         }
         [HttpPost]
         public ActionResult ShowAllPosts()
@@ -88,13 +99,13 @@ namespace PostProject.Controllers
             
             return PartialView("PostPartial", list);
         }
-        public int LogInUser(string Login, string Password)
-        {
-            var User = db.Users.FirstOrDefault(x=>x.Login==Login&&x.Password==Password);
-            if (User != null)
-                return User.Id;
-            return -1;
-        }
 
+        public ActionResult GetUserInfo()
+        {
+            string id = User.Identity.GetUserId();
+            var user = db.Users.Find(id);
+
+            return PartialView("_LoginPartial",user);
+        }
     }
 }

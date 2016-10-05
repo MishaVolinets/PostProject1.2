@@ -5,7 +5,7 @@
 
 <h2>Post</h2>
 
-<div class="bl-log">
+@*<div class="bl-log">
     <div class="bl-inpt">
         <div class="bl-textLog">
             <span class="bl-text">Login</span>
@@ -25,7 +25,7 @@
     <div class="bl-inpt">
         <button class="button" id="LogIn">Увійти</button>
     </div>
-</div>
+</div>*@
 
     <div class="massageBlock">
         <div class="insideMassageBlock">
@@ -51,52 +51,41 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-        var UserId;
         $('#submit').click(function () {
             var title = $("#Title").val();
             var description = $("#Description").val();
             $.ajax({
                 url: '@Url.Action("SentPost","Home")',
                 type: "POST",
-                data: {Title: title, Description: description, UserId},
+                data: { Title: title, Description: description },
                 dataType: "html",
                 success: function (data) {
                     $("#result").html(data);
-                    
+
                 }
             });
 
         });
-        $("#LogIn").click(function () {
-            var Login = $("#Log").val();
-            var Password = $("#Pass").val();
-            $.ajax({
-                url: '@Url.Action("LogInUser","Home")',
-                type: "GET",
-                dataType: "html",
-                data: { Login, Password },
-                success: function (data) {
-                    if (data != -1) {
-                        UserId = data;
-                        $(".bl-log").css("display", "none");
-                        ShowUserPosts();
-                    } else alert("Не вірно, спробуй щераз");
-                }
+        $.ajax({
+            url: '@Url.Action("ShowUserPosts", "Home")',
+            type: "POST",
+            dataType: "html",
+            success: function (data) {
+                $("#result").html(data);
+            }
 
-            });
         });
-        var ShowUserPosts = function () {
+
+        @*var ShowUserPosts = function () {
             $.ajax({
                 url: '@Url.Action("ShowUserPosts","Home")',
                 type: "POST",
                 data: {UserId},
                 dataType: "html",
-                success: function (data) {
-                    $("#result").html(data);
-                }
+
             });
         }
+    });*@
+
     });
-
-
 </script>
