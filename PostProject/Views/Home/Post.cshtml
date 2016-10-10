@@ -7,8 +7,31 @@
 <h2>Post</h2>
 
 
-
 <div ng-controller="PostCtrl" ng-cloak>
+    <div id="PU-block">
+        <div id="PU-block-Tit">
+            <input type="hidden" id="EPostId" ng-model="EPost.Id"/>
+            <div id="PU-Tit">
+                Title:
+            </div>
+            <div id="PU-in-Tit">
+                <textarea cols="15" rows="2.5" id="EPostTitle" ng-model="EPost.Title"></textarea>
+            </div>
+        </div>
+        <div id="PU-block-Des">
+            <div id="PU-Des">
+                Description
+            </div>
+            <div id="PU-in-Des">
+                <textarea cols="30" rows="10" id="EPostDescription" ng-model="EPost.Description"></textarea>
+            </div>
+        </div>
+        <div id="PU-block-Sub">
+            <button id="buttonSave" ng-click="saveEditedPost()">Зберегти</button>
+            <button id="buttonSave" ng-click="hidePopUp()">Скасувати</button>
+        </div>
+    </div>
+
     <div class="massageBlock">
         <div class="insideMassageBlock">
             <div class="inputBlock">
@@ -28,6 +51,7 @@
             </div>
         </div>
     </div>
+
     <div ng-repeat="Post in Posts">
         <div class="bl-Main" id="{{Post.Id}}">
             <div class="bl-info">
@@ -36,8 +60,8 @@
                     <button class="buttonDel"  ng-click="deletePost(Post.Id)">Видалити</button>
                 </div>
                 <div class="bl-tit">
-                    <div class="date">{{Post.DateOfCreate}}</div>
-                    <button class="buttonEdit" value="{{Post.Id}}" ng-click="editPost(Post.Id)">Редагувати</button>
+                    <div class="date">{{Post.DateOfCreate | date:'dd.MM.yyyy HH:mm'}}</div>
+                    <button class="buttonEdit" value="{{Post.Id}}" ng-click="editPost(Post)">Редагувати</button>
                 </div>
             </div>
             <div class="bl-title" id="titId_{{Post.Id}}" >
@@ -50,11 +74,12 @@
     </div>
 </div>
 <script type="text/javascript">
-
+    
     var app = angular.module("MyApp",  []);
     app.controller("PostCtrl", function ($scope, $http) {
         $scope.isOpen = false;
-
+        $scope.EPost = {};
+        $scope.currentPost;
         $http.get('@Url.Action("ShowUserPosts","Home")')
             .success(function (result) {
                 $scope.Posts = result;
@@ -80,8 +105,23 @@
                     $scope.Posts.splice(index,1);
                 });
         }
+        $scope.editPost = function (Post) {
+            $scope.currentPost = Post;
+            $scope.EPost = angular.copy(Post);
+            $("#PU-block").css("display", "block");
+        }
+        $scope.saveEditedPost = function () {
+            
+            $http.post('@Url.Action("SavePost","Home")', {model: $scope.EPost})
+                .success(function (result) {
+                    $scope.currentPost = angular.extend($scope.currentPost,$scope.EPost);
+                    $("#PU-block").css("display", "none");
+            });
+        }
+        $scope.hidePopUp = function () {
+            $("#PU-block").css("display", "none");
+        }
     });
-
 
 
     @*$(document).ready(function () {

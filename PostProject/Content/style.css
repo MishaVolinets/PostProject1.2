@@ -113,7 +113,7 @@
 }
 
 #PU-block{
-    display: block;
+    display: none;
 	margin: 10px;
 	width: 300px;
 	position: fixed;
@@ -123,6 +123,7 @@
     background-color: #f0cdf7;
     opacity: 0.8;
 }
+
 #PU-block-Tit{
 	width: 90%;
 	height: 10%;
