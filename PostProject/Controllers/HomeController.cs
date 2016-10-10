@@ -6,6 +6,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Data.Entity;
+using Newtonsoft.Json;
+using System.Web.Script.Serialization;
 
 namespace PostProject.Controllers
 {
@@ -37,7 +39,7 @@ namespace PostProject.Controllers
             return View("Post",temp);
         }
         [HttpPost]
-        public ActionResult SentPost(PostModel model)
+        public string SentPost(PostModel model)
         {
 
             string id = User.Identity.GetUserId();
@@ -46,7 +48,8 @@ namespace PostProject.Controllers
             model.DateOfCreate = DateTime.Now;
             db.PostModel.Add(model);
             db.SaveChanges();
-            return ShowUserPosts();
+            var jsonModel = JsonConvert.SerializeObject(model);
+            return jsonModel;
         }
         [HttpPost]
         public void DeletePost(string id)
@@ -73,39 +76,40 @@ namespace PostProject.Controllers
             lastModel.Description = model.Description;
             db.SaveChanges();
         }
-        [HttpPost]
-        public ActionResult ShowUserPosts()
+        [HttpGet]
+        public string ShowUserPosts()
         {
-            string userId =  User.Identity.GetUserId();
             if (HttpContext.User.Identity.IsAuthenticated)
             {
-                var list = from PostModel in db.PostModel
-                           where PostModel.User.Id == userId
-                           select PostModel;
-                list = list.Include(x => x.User).OrderByDescending(x => x.DateOfCreate);
-                return PartialView("PostPartial", list.ToList());
+                string userId = User.Identity.GetUserId();
+                //var list = from PostModel in db.PostModel
+                //           where PostModel.User.Id == userId
+                //           select PostModel;
+                var list = db.PostModel.Where(x => x.User.Id == userId).Include(x=>x.User).ToList();
+                var JsonPosts = JsonConvert.SerializeObject(list);
+                return JsonPosts;
             }
             else
             {
 
                 var list = db.PostModel.Include(x=>x.User).ToList().OrderByDescending(x => x.DateOfCreate);
-                return PartialView("PostPartial", list.ToList());
+                var JsonPosts = JsonConvert.SerializeObject(list);
+                return JsonPosts;
             }
         }
-        [HttpPost]
-        public ActionResult ShowAllPosts()
+        [HttpGet]
+        public string ShowAllPosts()
         {
-            var list = db.PostModel.ToList().OrderByDescending(x => x.DateOfCreate);
-            
-            return PartialView("PostPartial", list);
+            var list = db.PostModel.Include(x => x.User).ToList();
+            var JsonPosts = JsonConvert.SerializeObject(list);
+            return JsonPosts;
         }
-
-        public ActionResult GetUserInfo()
+        public string GetUserInfo()
         {
             string id = User.Identity.GetUserId();
             var user = db.Users.Find(id);
 
-            return PartialView("_LoginPartial",user);
+            return user.FirstName + " " + user.LastName;
         }
     }
 }

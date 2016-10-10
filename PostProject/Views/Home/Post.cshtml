@@ -1,56 +1,90 @@
 ﻿@model IEnumerable<PostProject.Models.PostModel>
 @{
     ViewBag.Title = "Post";
+    Scripts.Render("~/bundles/Angular");
 }
 
 <h2>Post</h2>
 
-@*<div class="bl-log">
-    <div class="bl-inpt">
-        <div class="bl-textLog">
-            <span class="bl-text">Login</span>
-        </div>
-        <div class="bl-inptLog">
-            <input type="text" size="9" id="Log"/>
-        </div>
-    </div>
-    <div class="bl-inpt">
-        <div class="bl-textLog">
-            <span class="bl-text">Password</span>
-        </div>
-        <div class="bl-inptLog">
-            <input type="text" size="9" id="Pass"/>
-        </div>
-    </div>
-    <div class="bl-inpt">
-        <button class="button" id="LogIn">Увійти</button>
-    </div>
-</div>*@
 
+
+<div ng-controller="PostCtrl" ng-cloak>
     <div class="massageBlock">
         <div class="insideMassageBlock">
             <div class="inputBlock">
                 <div class="Text">Title</div>
                 <div class="Input">
-                    <input type="text" id="Title">
+                    <input type="text" id="Title" ng-model="newPost.Title">
                 </div>
             </div>
             <div class="inputBlock">
                 <div class="Text">Text</div>
                 <div class="Input">
-                    <textarea rows="6" cols="21" id="Description"></textarea>
+                    <textarea rows="6" cols="21" id="Description" ng-model="newPost.Description"></textarea>
                 </div>
             </div>
             <div class="inputBlock">
-                <button id="submit" type="button">Send Post</button>
+                <button id="submit" type="button" ng-click="addPost(newPost)">Send Post</button>
             </div>
         </div>
     </div>
-<div id="result"></div>
-
-
+    <div ng-repeat="Post in Posts">
+        <div class="bl-Main" id="{{Post.Id}}">
+            <div class="bl-info">
+                <div class="bl-tit">
+                    <div class="name">{{Post.User.FirstName + " " + Post.User.LastName }}</div>
+                    <button class="buttonDel"  ng-click="deletePost(Post.Id)">Видалити</button>
+                </div>
+                <div class="bl-tit">
+                    <div class="date">{{Post.DateOfCreate}}</div>
+                    <button class="buttonEdit" value="{{Post.Id}}" ng-click="editPost(Post.Id)">Редагувати</button>
+                </div>
+            </div>
+            <div class="bl-title" id="titId_{{Post.Id}}" >
+                {{Post.Title}}
+            </div>
+            <div class="bl-description" id="descId_{{Post.Id}}" >
+                <p>{{Post.Description}}</p>
+            </div>
+        </div>
+    </div>
+</div>
 <script type="text/javascript">
-    $(document).ready(function () {
+
+    var app = angular.module("MyApp",  []);
+    app.controller("PostCtrl", function ($scope, $http) {
+        $scope.isOpen = false;
+
+        $http.get('@Url.Action("ShowUserPosts","Home")')
+            .success(function (result) {
+                $scope.Posts = result;
+            });
+        $scope.addPost = function (Post) {
+            $http.post('@Url.Action("SentPost","Home")', Post)
+                .success(function (result) {
+                    console.log(result);
+                    $scope.Posts.unshift(result);
+                });
+        }
+        $scope.deletePost = function (IdObj) {
+
+            $http.post('@Url.Action("DeletePost","Home")', {id : IdObj})
+                .success(function (result) {
+                    var index;
+                    for (var i = 0; i < $scope.Posts.length; i++) {
+                        if ($scope.Posts[i].Id == IdObj) {
+                            index = i;
+                            break;
+                        }
+                    }
+                    $scope.Posts.splice(index,1);
+                });
+        }
+    });
+
+
+
+    @*$(document).ready(function () {
         $('#submit').click(function () {
             var title = $("#Title").val();
             var description = $("#Description").val();
@@ -60,6 +94,8 @@
                 data: { Title: title, Description: description },
                 dataType: "html",
                 success: function (data) {
+                    $("#Title").val("");
+                    $("#Description").val("");
                     $("#result").html(data);
 
                 }
@@ -76,16 +112,5 @@
 
         });
 
-        @*var ShowUserPosts = function () {
-            $.ajax({
-                url: '@Url.Action("ShowUserPosts","Home")',
-                type: "POST",
-                data: {UserId},
-                dataType: "html",
-
-            });
-        }
     });*@
-
-    });
 </script>
